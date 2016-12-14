@@ -9,6 +9,10 @@ module.exports = {
     router: router
 };
 
+router.use('/', (req, res, next) => {
+    res.redirect('/profile');
+});
+
 router.use('/profile', (req, res, next) => {
     if (req.signedCookies.id) {
         modelUsers.findOne({
