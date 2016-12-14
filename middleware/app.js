@@ -9,14 +9,6 @@ module.exports = {
     router: router
 };
 
-router.use('/', (req, res, next) => {
-    if (req.signedCookies.id) {
-        res.redirect('/profile');
-    } else {
-        res.redirect('/auth/login');
-    }
-});
-
 router.use('/profile', (req, res, next) => {
     if (req.signedCookies.id) {
         modelUsers.findOne({
