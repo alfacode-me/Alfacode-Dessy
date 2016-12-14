@@ -9,6 +9,10 @@ module.exports = {
     router: router
 };
 
+router.get('/', (req, res) => {
+    res.redirect('/profile');
+});
+
 router.get('/sync', (req, res) => {
     modelInit.sync();
     res.send('SYNC DATABASE');
