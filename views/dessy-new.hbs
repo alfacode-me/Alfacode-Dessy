@@ -1,0 +1,87 @@
+{{!< backend}} 
+<div style="margin-top:15px; margin-left: 25px; margin-right:15px; margin-bottom: 15px;" class="title-bar">
+    <h1 class="title-bar-title">
+        <span class="d-ib">Dessy Terbaru</span>
+    </h1>
+    <p class="title-bar-description">
+        <small>Daftar dessy yang telah ada sebelumnya.</small>
+    </p>
+</div>
+<div style="margin-top:30px" class="profile-container">
+    <ol class="feed">
+        {{#each dessy}}
+        <li class="feed-item">
+            <div class="post">
+                <div class="post-header">
+                    <div class="post-author">
+                        <div class="post-author-avatar">
+                            <img class="img-circle" width="48" height="48" src="/src/dist/img/profile/{{this.user.image}}" alt="{{this.user.nama_depan}} {{this.user.nama_belakang}}">
+                        </div>
+                        <div class="post-author-info">
+                            <span class="text-muted">oleh</span>
+                            <a class="link-muted" href="/profile/id/{{this.user.username}}">
+                                <strong>{{this.user.nama_depan}} {{this.user.nama_belakang}}</strong>
+                            </a>
+                            <span class="post-timestamp"><span style="margin-left:2px" class="icon icon-clock-o"></span>                            {{this.datetime}}</span>
+                        </div>
+                    </div>
+                    <div class="post-dropdown">
+                        <div class="dropdown">
+                            <a class="dropdown-toggler" href="#" data-toggle="dropdown" aria-haspopup="true" role="button">
+                                <span class="icon icon-angle-down"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="/dessy/delete/{{this.file_dessy}}">Hapus</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-body">
+                    <div class="post-content">
+                        <h4 class="card-title fw-l">
+                            <a class="link-muted" href="/dessy/id/{{this.file_dessy}}">{{this.nama_dessy}}</a>
+                        </h4>
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-4 col-md-4">
+                                Versi
+                            </div>
+                            <div class="col-xs-8 col-sm-8 col-md-8">
+                                : {{this.versi_dessy}}
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4">
+                                Goal
+                            </div>
+                            <div class="col-xs-8 col-sm-8 col-md-8">
+                                : {{this.goal_dessy}}
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <br>
+                                <div class="table-responsive">
+                                    <table class="table table-middle table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Kriteria</th>
+                                                <th class="text-center">Bobot</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{#each this.kriteria}}
+                                            <tr>
+                                                <td>{{this.nama}}</td>
+                                                <td class="text-center">{{this.bobot}}</td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-actions">
+                    </div>
+                </div>
+            </div>
+        </li>
+        {{/each}}
+    </ol>
+</div>

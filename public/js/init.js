@@ -1,9 +1,12 @@
 $(() => {
-    var app = new Vue({
+    var app = new initVue({
         el: '#app',
-        delimiters: ['{', '}'],
         data: {
-            message: 'Hello Alfacode!'
+            message: 'Hello Alfacode!',
+            seen: true,
+            goal: null
         }
     });
+
+    $('[data-toggle="tooltip"]').tooltip();
 });

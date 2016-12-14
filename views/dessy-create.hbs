@@ -1,0 +1,245 @@
+{{!< backend}}
+
+<div class="title-bar">
+    <h1 class="title-bar-title">
+        <span class="d-ib">Buat Dessy</span>
+    </h1>
+    <p class="title-bar-description">
+        <small>Merancang Dessy sesuai keinginan dan kebutuhan anda sendiri.</small>
+    </p>
+</div>
+
+<div id="form-wizard" data-toggle="validator" class="form form-horizontal">
+    <ul class="steps">
+        <li class="step col-xs-3 active">
+            <a class="step-segment" href="#step-1" data-toggle="tab">
+                <span class="step-icon icon icon-compass"></span>
+            </a>
+            <div class="step-content">
+                <strong class="hidden-xs">Inisialisasi</strong>
+            </div>
+        </li>
+        <li class="step col-xs-3">
+            <a class="step-segment" href="#step-2" data-toggle="tab">
+                <span class="step-icon icon icon-balance-scale"></span>
+            </a>
+            <div class="step-content">
+                <strong class="hidden-xs">Penilaian Kriteria</strong>
+            </div>
+        </li>
+        <li class="step col-xs-3">
+            <a class="step-segment" href="#step-3" data-toggle="tab">
+                <span class="step-icon icon icon-pie-chart"></span>
+            </a>
+            <div class="step-content">
+                <strong class="hidden-xs">Pembobotan Kriteria</strong>
+            </div>
+        </li>
+        <li class="step col-xs-3">
+            <a class="step-segment" href="#step-4" data-toggle="tab">
+                <span class="step-icon icon icon-flag-checkered"></span>
+            </a>
+            <div class="step-content">
+                <strong class="hidden-xs">Rasio Konsistensi</strong>
+            </div>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="step-1" class="tab-pane active">
+
+            <form id="form1" data-toggle="validator" class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="divider">
+                        <div class="divider-content">Informasi</div>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <label class="col-sm-3 col-md-4 control-label">Nama</label>
+                        <div class="col-sm-6 col-md-5">
+                            <input v-model="dessy.nama" name="nama" class="form-control" type="text" data-msg-required="Nama tidak boleh kosong." required>
+                            <span class="form-control-feedback" aria-hidden="true"><span class="icon"></span></span>
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <label class="col-sm-3 col-md-4 control-label">Versi</label>
+                        <div class="col-sm-6 col-md-5">
+                            <input v-model="dessy.versi" name="versi" class="form-control" type="text" data-msg-required="Versi tidak boleh kosong." required>
+                            <span class="form-control-feedback" aria-hidden="true"><span class="icon"></span></span>
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <label class="col-sm-3 col-md-4 control-label">Goal</label>
+                        <div class="col-sm-6 col-md-5">
+                            <input v-model="dessy.goal" name="goal" class="form-control" type="text"  data-msg-required="Goal tidak boleh kosong." required>
+                            <span class="form-control-feedback" aria-hidden="true"><span class="icon"></span></span>
+                        </div>
+                    </div>
+                    <div class="divider">
+                        <div class="divider-content">Kriteria</div>
+                    </div>
+                    <add-kriteria v-for="(kriteria, index) in dessy.kriteria" :index="index"></add-kriteria>
+                    <div class="text-center">
+                        <p v-if="dessy.kriteria.length == 0">Belum terdapat kriteria, silahkan tambahkan kriteria.</p>
+                        <p v-if="dessy.kriteria.length >= 15">Maksimal 15 kriteria.</p>
+                        <button @click="addKriteria()" v-if="dessy.kriteria.length < 15" class="btn btn-info btn-sm btn-labeled" type="button"><span class="btn-label"><span class="icon icon-plus icon-lg icon-fw"></span></span>Kriteria</button>
+                    </div>
+                    <br><br>
+                    <button class="btn btn-primary btn-block btn-next" @click="createMatrix()" type="button"><span class="icon icon-chevron-circle-right icon-lg"></span></button>
+                    <br><br>
+                </div>
+            </form>
+        </div>
+        <div id="step-2" class="tab-pane">
+            <div class="divider">
+                <div class="divider-content">Matrix Penilaian</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-middle table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Kriteria</th>
+                                        <th class="text-center" v-for="kk in dessy.kriteria">{kk.nama}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(kb, i) in dessy.kriteria">
+                                        <td><strong>{kb.nama}</strong></td>
+                                        <td v-if="matrix[i]" v-for="(mx, idx) in matrix[i]" class="form-group form-group-sm"><cell-input :matrix="mx"></cell-input></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <button class="btn btn-danger btn-block btn-previous" @click="clearMatrix()" type="button"><span class="icon icon-chevron-circle-left icon-lg"></span></button>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <button class="btn btn-primary btn-block btn-next" @click="pembobotan()" type="button"><span class="icon icon-chevron-circle-right icon-lg"></span></button>
+            </div>
+            <br>
+            <br>
+        </div>
+        <div id="step-3" class="tab-pane">
+            <div class="divider">
+                <div class="divider-content">Matrik Penjumlahan</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-middle table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Kriteria</th>
+                                        <th class="text-center" v-for="kk in dessy.kriteria">{kk.nama}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(kb, i) in dessy.kriteria">
+                                        <td><strong>{kb.nama}</strong></td>
+                                        <td class="text-center" v-for="(mx, idx) in matrix[i]" class="form-group form-group-sm"><cell-matrix :matrix="mx"></cell-matrix></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Jumlah</strong></td>
+                                        <td class="text-center" v-for="(jml, idx) in jumlah.nilaikolom" class="form-group form-group-sm"><input type="number" style="min-width:75px" class="form-control text-center" :value="(jml.value).toFixed(2)" disabled></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="divider">
+                <div class="divider-content">Vector Prioritas</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-middle table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Kriteria</th>
+                                        <th class="text-center" v-for="kk in dessy.kriteria">{kk.nama}</th>
+                                        <th class="text-center">Jumlah</th>
+                                        <th class="text-center">Vertor Prioritas</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(kb, i) in dessy.kriteria">
+                                        <td><strong>{kb.nama}</strong></td>
+                                        <td class="text-center" v-if="matrix2[i]" v-for="(mx, idx) in matrix2[i]" class="form-group form-group-sm"><cell-matrix :matrix="mx"></cell-matrix></td>
+                                        <td class="text-center" v-if="jumlah.baris[i]" class="form-group form-group-sm"><input type="number" style="min-width:75px" class="form-control text-center" :value="(jumlah.baris[i].value).toFixed(2)" disabled></td>
+                                        <td class="text-center" class="form-group form-group-sm"><input type="number" class="form-control text-center" style="min-width:75px" :value="(vektorPrioritas[i].value).toFixed(2)" disabled></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Jumlah</strong></td>
+                                        <td v-for="(jml, idx) in jumlah.kolom" class="form-group form-group-sm"><input type="number" class="form-control text-center" style="min-width:75px" :value="(jml.value).toFixed(2)" disabled></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <button class="btn btn-danger btn-block btn-previous" @click="createMatrix()" type="button"><span class="icon icon-chevron-circle-left icon-lg"></span></button>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <button class="btn btn-primary btn-block btn-next" @click="testCR()" type="button"><span class="icon icon-chevron-circle-right icon-lg"></span></button>
+            </div>
+            <br>
+            <br>
+        </div>
+        <div id="step-4" class="tab-pane">
+            <div class="divider">
+                <div class="divider-content">Eigen Maksimum</div>
+            </div>
+            <div class="text-center">
+                <h3>{(em).toFixed(6)}</h3>
+            </div>
+            <div class="divider">
+                <div class="divider-content">Indeks Konsistensi</div>
+            </div>
+            <div class="text-center">
+                <h3>{(ci).toFixed(6)}</h3>
+            </div>
+            <div class="divider">
+                <div class="divider-content">Indeks Rasio</div>
+            </div>
+            <div class="text-center">
+                <h3>{ri}</h3>
+            </div>
+            <div class="divider">
+                <div class="divider-content">Rasio Konsistensi</div>
+            </div>
+            <div class="text-center">
+                <h3>{(cr).toFixed(6)}</h3>
+            </div>
+            <div class="divider">
+                <div class="divider-content">Status Pembobotan</div>
+            </div>
+            <div class="text-center">
+                <h3 v-if="cr >= 0.1" style="color:red">Tidak Konsisten</h3>
+                <h3 v-if="cr < 0.1 && cr > 0" style="color:blueviolet">Cukup Konsisten</h3>
+                <h3 v-if="cr == 0" style="color:blue">Konsisten</h3>
+            </div>
+            <br>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <button class="btn btn-danger btn-block btn-previous" @click="pembobotan()" type="button"><span class="icon icon-chevron-circle-left icon-lg"></span></button>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <button v-if="cr < 0.1" class="btn btn-info btn-block" @click="simpanDessy()" id="btn-simpan" type="button"><span class="icon icon-save icon-lg"></span></button>
+                <button v-if="cr > 0.1" class="btn btn-info btn-block" type="button" disabled><span class="icon icon-save icon-lg"></span></button>
+            </div>
+            <br>
+            <br>
+        </div>
+    </div>
+</div>

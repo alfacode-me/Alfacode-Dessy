@@ -10,5 +10,8 @@ module.exports = {
     },
     full: (datetime) => {
         return moment(datetime, configApp.timezone).format('LLLL');
+    },
+    fromNow: (datetime) => {
+        return moment(datetime, configApp.timezone).fromNow();
     }
 };

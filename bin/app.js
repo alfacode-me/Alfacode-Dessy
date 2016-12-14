@@ -39,7 +39,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Cookie Parser
-app.use(cookieParser());
+app.use(cookieParser(configApp.secret));
 
 // Setup Public Folder
 app.use(express.static(path.join(__dirname, 'public')));

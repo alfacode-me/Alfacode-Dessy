@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{app.name}} - Decision Support System</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="description" content="{{app.name}} - Authentication, Login and Register">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700">
+    <link rel="apple-touch-icon" href="/src/dist/apple-touch-icon.png">
+    <link rel="icon" href="/src/dist/favicon.ico">
+    <link rel="stylesheet" href="/src/dist/css/vendor.min.css">
+    <link rel="stylesheet" href="/src/dist/css/elephant.min.css">
+    {{#if login}}
+        <link rel="stylesheet" href="/src/dist/css/login-2.min.css">
+    {{/if}}
+    {{#if register}}
+        <link rel="stylesheet" href="/src/dist/css/signup-2.min.css">
+    {{/if}}
+    {{#if verifikasi}}
+        <link rel="stylesheet" href="/src/dist/css/signup-2.min.css">
+    {{/if}}
+</head>
+
+<body>
+    {{{body}}}
+
+    <script src="/module/vue/dist/vue.js"></script>
+	<script src="/src/js/initvue.js"></script>
+	<script src="/src/js/components.js"></script>
+
+    {{#if login}}
+        <script src="/src/js/login.js"></script>
+    {{/if}}
+
+    {{#if register}}
+        <script src="/src/js/register.js"></script>
+    {{/if}}
+
+    {{#if verifikasi}}
+        <script src="/src/js/verifikasi.js"></script>
+    {{/if}}
+
+    <script src="/src/dist/js/vendor.min.js"></script>
+    <script src="/src/dist/js/elephant.min.js"></script>
+    <script src="/src/dist/js/application.min.js"></script>
+
+</body>
+
+</html>

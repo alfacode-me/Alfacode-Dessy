@@ -1,0 +1,11 @@
+{{!< main}}
+
+<div>
+    <add-goal v-if="addGoal"></add-goal>
+    <br>
+    <input type="text" placeholder="Kriteria">
+    <br>
+    <p v-if="goal">{goal}</p>
+    <p v-if="seen">Now you see me - {message}</p>
+    <button @click="ok ? true : false"></button>
+</div>

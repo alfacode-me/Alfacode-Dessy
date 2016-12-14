@@ -1,0 +1,142 @@
+{{!< backend}} 
+<div class="profile">
+    <div class="profile-header">
+        <div class="profile-cover">
+            <div class="profile-container">
+                <div class="profile-card">
+                    <div class="profile-avetar">
+                        <img class="profile-avetar-img" width="128" height="128" src="/src/dist/img/profile/{{user.image}}" alt="{{user.nama_depan}} {{user.nama_belakang}}">
+                    </div>
+                    <div class="profile-overview">
+                        <h1 class="profile-name">{{user.nama_depan}} {{user.nama_belakang}}</h1>
+                        <p>Selamat datang {{user.nama_depan}} {{user.nama_belakang}}, silahkan menggunakan dessy.alfacode.me dengan baik dan benar :)</p>
+                    </div>
+                    <div class="profile-info">
+                        <ul class="profile-nav">
+                            <li>
+                                <a href="#">
+                                    <h3 class="profile-nav-heading">{{cDessy}}</h3>
+                                    <em>
+                            <small>Dessy</small>
+                          </em>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <h3 class="profile-nav-heading">{{cDessynta}}</h3>
+                                    <em>
+                            <small>Dessynta</small>
+                          </em>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="profile-tabs">
+                    <ul class="profile-nav">
+                        <li>
+                            <a href="/profile">Profil</a>
+                        </li>
+                        <li class="active">
+                            <a href="/profile/dessynta">Dessynta</a>
+                        </li>
+                        <li>
+                            <a href="/profile/dessy">Dessy</a>
+                        </li>
+                        <!--<li>
+                            <a href="/profile/setting">Pengaturan</a>
+                        </li>-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="profile-body">
+        <div class="profile-container">
+            <ol class="feed">
+                {{#each dessynta}}
+                <li class="feed-item">
+                  <div class="post">
+                    <div class="post-header">
+                      <div class="post-author">
+                        <div class="post-author-avatar">
+                          <img class="img-circle" width="48" height="48" src="/src/dist/img/profile/{{user.image}}" alt="{{this.user.nama_depan}} {{this.user.nama_belakang}}">
+                        </div>
+                        <div class="post-author-info">
+                            <span class="text-muted">oleh</span>
+                            <a class="link-muted" href="/profile/id/{{this.user.username}}">
+                            <strong>{{this.user.nama_depan}} {{this.user.nama_belakang}}</strong>
+                          </a>
+                          <span class="post-timestamp"><span style="margin-left:2px" class="icon icon-clock-o"></span> {{this.datetime}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="post-body">
+                      <div class="post-content">
+                        <h4 class="card-title fw-l">
+                            <a class="link-muted" href="/dessynta/id/{{this.file_dessynta}}">{{this.file.dessy.info.nama_dessy}}</a>
+                        </h4>
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-4 col-md-4">
+                                Dessy oleh
+                            </div>
+                            <div class="col-xs-8 col-sm-8 col-md-8">
+                                : {{this.file.dessy.info.user.nama_depan}} {{this.file.dessy.info.user.nama_belakang}}
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4">
+                                Versi
+                            </div>
+                            <div class="col-xs-8 col-sm-8 col-md-8">
+                                : {{this.file.dessy.info.versi_dessy}}
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4">
+                                Goal
+                            </div>
+                            <div class="col-xs-8 col-sm-8 col-md-8">
+                                : {{this.file.dessy.info.goal_dessy}}
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <br>
+                                <div class="table-responsive">
+                                    <table class="table table-middle table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">OCW</th>
+                                                <th class="text-center">Bobot</th>
+                                                {{#each this.file.alternatif}}
+                                                <th class="text-center">{{this.nama}}</td>
+                                                {{/each}}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{#each this.ocw}}
+                                            <tr>
+                                                <td>{{this.kriteria}}</td>
+                                                <td class="text-center">{{this.bobot}}</td>
+                                                {{#each this.vp}}
+                                                <td class="text-center">{{this}}</td>
+                                                {{/each}}
+                                            </tr>
+                                            {{/each}}
+                                            <tr>
+                                                <td colspan="2"><strong>Composite Weight</strong></td>
+                                                {{#each this.cw}}
+                                                <td class="text-center">{{this}}</td>
+                                                {{/each}}
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="post-actions">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                {{/each}}
+            </ol>
+        </div>
+    </div>
+</div>

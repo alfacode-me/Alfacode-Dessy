@@ -1,0 +1,54 @@
+{{!< auth}} 
+<div id="app" class="login">
+    <div class="login-body">
+        <a class="login-brand" href="index.html">
+            <img class="img-responsive" src="/src/dist/img/logo.png" alt="Alfacode.me">
+        </a>
+        <p style="text-align:center">
+            <em>Silahkan masuk dengan akun anda untuk dapat menggunakan <strong>Dessy</strong> dengan gratis selamanya.</em>
+        </p>
+        <div class="login-form">
+            <div class="divider">
+                <div class="divider-content">Masuk</div>
+            </div>
+            <form id="form-masuk" data-toggle="validator">
+                <div class="row gutter-xs">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input v-model="users.username" id="username" class="form-control" placeholder="Username" type="text" name="username" spellcheck="false"
+                                autocomplete="off" data-msg-required="Username tidak boleh kosong." required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gutter-xs">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="password">Katasandi</label>
+                            <input v-model="users.password" id="password" class="form-control" placeholder="Katasandi" type="password" name="password"
+                                minlength="6" data-msg-minlength="Katasandi harus memiliki minimal 6 karakter." data-msg-required="Katasandi tidak boleh kosong."
+                                required>
+                            <small class="help-block">Minimum 6 karakter; case sensitive.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="custom-control custom-control-primary custom-checkbox">
+                        <input v-model="users.remember" class="custom-control-input" type="checkbox">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-label">Tetap masuk</span>
+                    </label>
+                    <span aria-hidden="true"> · </span>
+                    <a href="/auth/reset">Lupa katasandi?</a>
+                </div>
+            </form>
+            <button id="btn-masuk" @click="masuk()" class="btn btn-primary btn-block">Masuk</button>
+        </div>
+    </div>
+    <div style="text-align:center;">
+        Belum memiliki akun? <a href="/auth/register">Daftar</a>
+        <br>
+        <br> Copyright &copy; 2016 by <a href="https://alfacode.me"><strong>Alfacode.me</strong></a>
+        <br>
+    </div>
+    </div>

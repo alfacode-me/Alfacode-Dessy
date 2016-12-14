@@ -1,0 +1,114 @@
+{{!< auth}} 
+
+<div id="app" class="signup">
+    <div class="signup-body">
+        <a class="signup-brand" href="index.html">
+            <img class="img-responsive" src="/src/dist/img/logo.png" alt="Alfacode.me">
+        </a>
+        <p class="signup-heading">
+            <em>Mulai dengan mendaftarkan diri anda untuk dapat menggunakan <strong>Dessy</strong> dengan gratis selamanya.</em>
+        </p>
+        <div class="signup-divider">
+            <div class="divider">
+                <div class="divider-content">Daftar</div>
+            </div>
+        </div>
+        <div class="signup-form">
+            <form id="form-daftar" data-toggle="validator">
+                <div class="row gutter-xs">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="first-name">Nama Depan</label>
+                            <input v-model="users.nama_depan" id="first-name" class="form-control" placeholder="Nama Depan" type="text" name="nama_depan" spellcheck="false" data-msg-required="Nama depan tidak boleh kosong."
+                                required>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="last-name">Nama Belakang</label>
+                            <input v-model="users.nama_belakang" id="last-name" class="form-control" placeholder="Nama Belakang" type="text" name="nama_belakang" spellcheck="false" data-msg-required="Nama belakang tidak boleh kosong."
+                                required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gutter-xs">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input v-model="users.email" id="email" class="form-control" placeholder="Email" type="email" name="email" spellcheck="false" autocomplete="off"
+                                data-msg-required="Email tidak boleh kosong." required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gutter-xs">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="password">Katasandi</label>
+                            <input v-model="users.password" id="password" class="form-control" placeholder="Katasandi" type="password" name="password" minlength="6" data-msg-minlength="Katasandi harus memiliki minimal 6 karakter."
+                                data-msg-required="Katasandi tidak boleh kosong." required>
+                            <small class="help-block">Minimum 6 karakter; case sensitive.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gutter-xs">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label for="birth-month">Tanggal Lahir</label>
+                            <div class="row gutter-xs">
+                                <div class="col-xs-3">
+                                    <div class="form-group">
+                                        <input v-model="tgl_lahir.tanggal" id="birth-day" class="form-control" type="number" name="birth_day" placeholder="Hari" min="1" max="31" data-msg-min="Tanggal lahir tidak valid."
+                                            data-msg-max="Tanggal lahir tidak valid." data-msg-required="Tanggal lahir tidak boleh kosong."
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <select v-model="tgl_lahir.bulan" id="birth-month" class="custom-select" name="birth_month" data-msg-required="Bulan lahir tidak boleh kosong." required>
+                                            <option v-for="bln in bulan" v-bind:value="bln.value">{bln.text}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="form-group">
+                                        <input v-model="tgl_lahir.tahun" id="birth-year" class="form-control" type="number" name="birth_year" placeholder="Tahun" min="1900" max="2016" data-msg-min="Tahun lahir tidak valid."
+                                            data-msg-max="Tahun lahir tidak valid." data-msg-required="Tahun lahir tidak boleh kosong."
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gutter-xs">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label for="gender">Jenis kelamin</label>
+                            <select v-model="users.jenkel" id="gender" class="custom-select" name="gender" data-msg-required="Jenis kelamin tidak boleh kosong." required>
+                                <option v-for="g in gender" v-bind:value="g.value">{g.text}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gutter-xs">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label class="custom-control custom-control-primary custom-checkbox">
+                    <input v-model="agree" id="agree" class="custom-control-input" type="checkbox" name="agree" data-msg-required="Anda harus menyetujui peraturan yang berlaku." required>
+                    <span class="custom-control-indicator"></span>
+                    <small class="custom-control-label">Saya menyetujui semua peraturan.</small>
+                  </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <button @click="daftar()" id="btn-daftar" class="btn btn-primary btn-block" v-bind:disabled="agree ? false:true">Daftar</button>
+        </div>
+    </div>
+    <div class="signup-footer">
+        Sudah memiliki akun? <a href="/auth/login">Masuk</a>
+        <br>
+        <br> Copyright &copy; 2016 by <a href="https://alfacode.me"><strong>Alfacode.me</strong></a>
+        <br>
+    </div>
+</div>

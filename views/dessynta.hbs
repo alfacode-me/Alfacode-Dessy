@@ -1,0 +1,146 @@
+{{!< backend}}
+
+<div class="title-bar">
+    <h1 class="title-bar-title">
+        <span class="d-ib">Dessynta</span>
+    </h1>
+    <p class="title-bar-description">
+        <small>Informasi serta hasil dari Dessy.</small>
+    </p>
+</div>
+
+<div class="col-md-8 col-md-offset-2">
+    <h4 class="card-title fw-l text-center">{{dss.file.dessy.info.nama_dessy}}</h4>
+    <div class="divider">
+        <div class="divider-content">Informasi</div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 col-sm-4 col-md-4">
+            Oleh
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8">
+            : {{dss.user.nama_depan}} {{dss.user.nama_belakang}}
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4">
+            Dibuat
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8">
+            : {{dss.datetime}}
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4">
+            Dessy oleh
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8">
+            : {{dss.file.dessy.info.user.nama_depan}} {{dss.file.dessy.info.user.nama_belakang}}
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4">
+            Versi
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8">
+            : {{dss.file.dessy.info.versi_dessy}}
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4">
+            Goal
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8">
+            : {{dss.file.dessy.info.goal_dessy}}
+        </div>
+    </div>
+    <div class="divider">
+        <div class="divider-content">Kriteria</div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-middle table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center">Nama</th>
+                    <th class="text-center">Vektor Prioritas</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each dss.file.dessy.kriteria}}
+                <tr>
+                    <td>{{this.nama}}</td>
+                    <td class="text-center">{{this.bobot}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div class="divider">
+        <div class="divider-content">Alternatif</div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-middle table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center">Nama</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each dss.file.alternatif}}
+                <tr>
+                    <td>{{this.nama}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    {{#each vkp}}
+    <div class="divider">
+        <div class="divider-content">Vector Prioritas {{this.kriteria}}</div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-middle table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center">{{this.kriteria}}</th>
+                    <th class="text-center">Vektor Prioritas</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each this.value}}
+                <tr>
+                    <td>{{this.alternatif}}</td>
+                    <td class="text-center">{{this.vp}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    {{/each}}
+    <div class="divider">
+        <div class="divider-content">Overall Composite Weight</div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-middle table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center">OCW</th>
+                    <th class="text-center">Bobot</th>
+                    {{#each dss.file.alternatif}}
+                    <th class="text-center">{{this.nama}}</td>
+                    {{/each}}
+                </tr>
+            </thead>
+            <tbody>
+                {{#each ocw}}
+                <tr>
+                    <td>{{this.kriteria}}</td>
+                    <td class="text-center">{{this.bobot}}</td>
+                    {{#each this.vp}}
+                    <td class="text-center">{{this}}</td>
+                    {{/each}}
+                </tr>
+                {{/each}}
+                <tr>
+                    <td colspan="2"><strong>Composite Weight</strong></td>
+                    {{#each cw}}
+                    <td class="text-center">{{this}}</td>
+                    {{/each}}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br><br>
+</div>

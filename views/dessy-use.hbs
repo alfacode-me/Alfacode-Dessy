@@ -1,0 +1,323 @@
+{{!< backend}}
+
+<div class="title-bar">
+    <h1 class="title-bar-title">
+        <span class="d-ib">Buat Dessy</span>
+    </h1>
+    <p class="title-bar-description">
+        <small>Merancang Dessy sesuai keinginan dan kebutuhan anda sendiri.</small>
+    </p>
+</div>
+
+<input id="dessy-id" value="{{dss.file_dessy}}" type="text" hidden>
+
+<div id="form-wizard" data-toggle="validator" class="form form-horizontal">
+    <ul class="steps">
+        <li class="step col-xs-3 active">
+            <a class="step-segment" href="#step-1" data-toggle="tab">
+                <span class="step-icon icon icon-compass"></span>
+            </a>
+            <div class="step-content">
+                <strong class="hidden-xs">Informasi</strong>
+            </div>
+        </li>
+        <li class="step col-xs-3">
+            <a class="step-segment" href="#step-2" data-toggle="tab">
+                <span class="step-icon icon icon-balance-scale"></span>
+            </a>
+            <div class="step-content">
+                <strong class="hidden-xs">Penilaian Alternatif</strong>
+            </div>
+        </li>
+        <li class="step col-xs-3">
+            <a class="step-segment" href="#step-3" data-toggle="tab">
+                <span class="step-icon icon icon-pie-chart"></span>
+            </a>
+            <div class="step-content">
+                <strong class="hidden-xs">Vektor Prioritas</strong>
+            </div>
+        </li>
+        <li class="step col-xs-3">
+            <a class="step-segment" href="#step-4" data-toggle="tab">
+                <span class="step-icon icon icon-flag-checkered"></span>
+            </a>
+            <div class="step-content">
+                <strong class="hidden-xs">Rasio Konsistensi</strong>
+            </div>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="step-1" class="tab-pane active">
+            <form id="form1" data-toggle="validator" class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <br>
+                    <br>
+                    <h4 class="card-title fw-l text-center">{{dss.nama_dessy}}</h4>
+                    <div class="divider">
+                        <div class="divider-content">Informasi</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            Oleh
+                        </div>
+                        <div class="col-xs-8 col-sm-8 col-md-8">
+                            : {{dss.user.nama_depan}} {{dss.user.nama_belakang}}
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            Dibuat
+                        </div>
+                        <div class="col-xs-8 col-sm-8 col-md-8">
+                            : {{dss.datetime}}
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            Versi
+                        </div>
+                        <div class="col-xs-8 col-sm-8 col-md-8">
+                            : {{dss.versi_dessy}}
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            Goal
+                        </div>
+                        <div class="col-xs-8 col-sm-8 col-md-8">
+                            : {{dss.goal_dessy}}
+                        </div>
+                    </div>
+                    <div class="divider">
+                        <div class="divider-content">Kriteria</div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-middle table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Nama</th>
+                                    <th class="text-center">Bobot</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each dss.kriteria}}
+                                <tr>
+                                    <td>{{this.nama}}</td>
+                                    <td class="text-center">{{this.bobot}}</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="divider">
+                        <div class="divider-content">Alternatif</div>
+                    </div>
+                    <add-alternatif v-for="(alternatif, index) in alternatif" :index="index"></add-alternatif>
+                    <div class="text-center">
+                        <p v-if="alternatif.length == 0">Belum terdapat alternatif, silahkan tambahkan alternatif.</p>
+                        <p v-if="alternatif.length >= 25">Maksimal 25 alternatif.</p>
+                        <button @click="addAlternatif()" v-if="alternatif.length < 25" class="btn btn-info btn-sm btn-labeled" type="button"><span class="btn-label"><span class="icon icon-plus icon-lg icon-fw"></span></span>Alternatif</button>
+                    </div>
+                    <br><br>
+                    <button class="btn btn-primary btn-block btn-next" @click="createMatrix()" type="button"><span class="icon icon-chevron-circle-right icon-lg"></span></button>
+                    <br><br>
+                </div>
+            </form>
+        </div>
+        <div id="step-2" class="tab-pane">
+            <div v-for="(mx, a) in matrix">
+                <div class="divider">
+                    <div class="divider-content">Penilaian Alternatif {dessy.kriteria[a].nama}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-middle table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">{dessy.kriteria[a].nama}</th>
+                                            <th class="text-center" v-for="kk in alternatif">{kk.nama}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(kb, b) in alternatif">
+                                            <td><strong>{kb.nama}</strong></td>
+                                            <td v-if="matrix[a][b]" v-for="(mx, c) in matrix[a][b]" class="form-group form-group-sm">
+                                                <cell-input1 :index="a" :matrix="mx"></cell-input1>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <button class="btn btn-primary btn-block btn-next" @click="pembobotan()" type="button"><span class="icon icon-chevron-circle-right icon-lg"></span></button>
+            </div>
+            <br><br>
+        </div>
+        <div id="step-3" class="tab-pane">
+            <div v-if="matrix2[a1]" v-for="(ktr, a1) in dessy.kriteria">
+                <div class="divider">
+                    <div class="divider-content">Vector Prioritas {ktr.nama}</div>
+                </div>
+                <div class="panel panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-middle table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">{ktr.nama}</th>
+                                    <th class="text-center" v-for="alt in alternatif">{alt.nama}</th>
+                                    <th class="text-center">Jumlah</th>
+                                    <th class="text-center">Vektor Prioritas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(alt, a2) in alternatif">
+                                    <td><strong>{alt.nama}</strong></td>
+                                    <td class="text-center" v-for="(mx, idx) in matrix2[a1][a2]" class="form-group form-group-sm">
+                                        <cell-matrix2 :matrix="mx" :index="a1"></cell-matrix2>
+                                    </td>
+                                    <td v-if="jumlah[a1]" class="form-group form-group-sm"><input type="number" style="min-width:75px" class="form-control text-center" :value="(jumlah[a1].baris[a2].value).toFixed(2)"
+                                            disabled></td>
+                                    <td class="text-center" class="form-group form-group-sm"><input type="number" class="form-control text-center" style="min-width:75px" :value="(vektorPrioritas[a1][a2].value).toFixed(2)"
+                                            disabled></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Jumlah</strong></td>
+                                    <td v-if="jumlah[a1]" v-for="(jml, idx) in jumlah[a1].kolom" class="form-group form-group-sm"><input type="number" class="form-control text-center" style="min-width:75px" :value="(jml.value).toFixed(2)"
+                                            disabled></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <button class="btn btn-danger btn-block btn-previous" @click="pembobotan()" type="button"><span class="icon icon-chevron-circle-left icon-lg"></span></button>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <button class="btn btn-primary btn-block btn-next" @click="testCR()" type="button"><span class="icon icon-chevron-circle-right icon-lg"></span></button>
+            </div>
+            <br><br>
+        </div>
+        <div id="step-4" class="tab-pane">
+            <div class="divider">
+                <div class="divider-content">Eigen Maksimum</div>
+            </div>
+            <div class="panel panel-body">
+                <div class="table-responsive">
+                    <table class="table table-middle table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Kriteria</th>
+                                <th class="text-center">Eigen Maksimum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-if="em[i1]" v-for="(ktr, i1) in dessy.kriteria">
+                                <td>{ktr.nama}</td>
+                                <td class="text-center">{(em[i1].value).toFixed(6)}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="divider">
+                <div class="divider-content">Indeks Konsistensi</div>
+            </div>
+            <div class="panel panel-body">
+                <div class="table-responsive">
+                    <table class="table table-middle table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Kriteria</th>
+                                <th class="text-center">Indeks Konsistensi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-if="ci[i1]" v-for="(ktr, i1) in dessy.kriteria">
+                                <td>{ktr.nama}</td>
+                                <td class="text-center">{(ci[i1].value).toFixed(6)}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="divider">
+                <div class="divider-content">Indeks Rasio</div>
+            </div>
+            <div class="panel panel-body">
+                <div class="table-responsive">
+                    <table class="table table-middle table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Kriteria</th>
+                                <th class="text-center">Indeks Rasio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-if="ri[i1]" v-for="(ktr, i1) in dessy.kriteria">
+                                <td>{ktr.nama}</td>
+                                <td class="text-center">{(ri[i1].value).toFixed(6)}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="divider">
+                <div class="divider-content">Rasio Konsistensi</div>
+            </div>
+            <div class="panel panel-body">
+                <div class="table-responsive">
+                    <table class="table table-middle table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Kriteria</th>
+                                <th class="text-center">Rasio Konsistensi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-if="cr[i1]" v-for="(ktr, i1) in dessy.kriteria">
+                                <td>{ktr.nama}</td>
+                                <td class="text-center">{(cr[i1].value).toFixed(6)}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="divider">
+                <div class="divider-content">Status Pembobotan</div>
+            </div>
+            <div class="panel panel-body">
+                <div class="table-responsive">
+                    <table class="table table-middle table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Kriteria</th>
+                                <th class="text-center">Status Pembobotan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-if="cr[i1]" v-for="(ktr, i1) in dessy.kriteria">
+                                <td>{ktr.nama}</td>
+                                <td class="text-center" v-if="cr[i1].value >= 0.1" style="color:red">Tidak Konsisten</td>
+                                <td class="text-center" v-if="cr[i1].value < 0.1 && cr[i1].value > 0" style="color:blueviolet">Cukup Konsisten</td>
+                                <td class="text-center" v-if="cr[i1].value == 0" style="color:blue">Konsisten</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <button class="btn btn-danger btn-block btn-previous" @click="pembobotan()" type="button"><span class="icon icon-chevron-circle-left icon-lg"></span></button>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <button v-if="status == 0" class="btn btn-info btn-block" @click="simpanDessy()" id="btn-simpan" type="button"><span class="icon icon-save icon-lg"></span></button>
+                <button v-if="status != 0" class="btn btn-info btn-block" type="button" disabled><span class="icon icon-save icon-lg"></span></button>
+            </div>
+            <br>
+            <br>
+        </div>
+    </div>
+</div>

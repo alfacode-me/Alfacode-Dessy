@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{app.name}}</title>
+    <title>{{app.name}} - {{app.fullname}}</title>
 </head>
 <body>
     <div id="app">
-        {{> info}}
-        {message}
         {{{body}}}
     </div>
     <script src="/module/jquery/dist/jquery.min.js"></script>
     <script src="/module/vue/dist/vue.js"></script>
+    <script src="/src/js/initvue.js"></script>
+    <script src="/src/js/components.js"></script>
     <script src="/src/js/init.js"></script>
 </body>
 </html>

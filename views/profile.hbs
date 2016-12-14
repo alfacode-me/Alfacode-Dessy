@@ -1,0 +1,108 @@
+{{!< backend}} 
+<div class="profile">
+    <div class="profile-header">
+        <div class="profile-cover">
+            <div class="profile-container">
+                <div class="profile-card">
+                    <div class="profile-avetar">
+                        <img class="profile-avetar-img" width="128" height="128" src="/src/dist/img/profile/{{user.image}}" alt="{{user.nama_depan}} {{user.nama_belakang}}">
+                    </div>
+                    <div class="profile-overview">
+                        <h1 class="profile-name">{{user.nama_depan}} {{user.nama_belakang}}</h1>
+                        <p>Selamat datang {{user.nama_depan}} {{user.nama_belakang}}, silahkan menggunakan dessy.alfacode.me dengan baik dan benar :)</p>
+                    </div>
+                    <div class="profile-info">
+                        <ul class="profile-nav">
+                            <li>
+                                <a href="#">
+                                    <h3 class="profile-nav-heading">{{cDessy}}</h3>
+                                    <em>
+                            <small>Dessy</small>
+                          </em>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <h3 class="profile-nav-heading">{{cDessynta}}</h3>
+                                    <em>
+                            <small>Dessynta</small>
+                          </em>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="profile-tabs">
+                    <ul class="profile-nav">
+                        <li class="active">
+                            <a href="/profile">Profil</a>
+                        </li>
+                        <li>
+                            <a href="/profile/dessynta">Dessynta</a>
+                        </li>
+                        <li>
+                            <a href="/profile/dessy">Dessy</a>
+                        </li>
+                        <!--<li>
+                            <a href="/profile/setting">Pengaturan</a>
+                        </li>-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="profile-body">
+        <div class="profile-container">
+            <div class="form form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Username</label>
+                    <div class="col-sm-9">
+                      <input class="form-control" value="{{user.username}}" readonly="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Email</label>
+                    <div class="col-sm-9">
+                      <input class="form-control" value="{{user.email}}" readonly="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Nama Depan</label>
+                    <div class="col-sm-9">
+                      <input class="form-control" value="{{user.nama_depan}}" readonly="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Nama Belakang</label>
+                    <div class="col-sm-9">
+                      <input class="form-control" value="{{user.nama_belakang}}" readonly="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Tanggal Lahir</label>
+                    <div class="col-sm-9">
+                      <input class="form-control" value="{{user.tgl_lahir}}" readonly="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Jenis Kelamin</label>
+                    <div class="col-sm-9">
+                      <input class="form-control" value="{{user.jenkel}}" readonly="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Status akun</label>
+                    <div class="col-sm-9">
+                      <input class="form-control" value="{{user.status_validasi}}" readonly="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Bergabung sejak</label>
+                    <div class="col-sm-9">
+                      <input class="form-control" value="{{user.bergabung}}" readonly="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+{{!< auth}} 
+
+<div id="app" class="signup">
+    <div class="signup-body">
+        <a class="signup-brand" href="index.html">
+            <img class="img-responsive" src="/src/dist/img/logo.png" alt="Alfacode.me">
+        </a>
+        <p class="signup-heading">
+            <em>Verifikasi akun anda untuk dapat menggunakan <strong>Dessy</strong> dengan gratis selamanya.</em>
+        </p>
+        <div class="signup-divider">
+            <div class="divider">
+                <div class="divider-content">Verifikasi</div>
+            </div>
+        </div>
+        <div class="signup-form">
+            <form id="form-verifikasi" data-toggle="validator">
+                <div class="row gutter-xs">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input v-model="users.username" id="username" class="form-control" placeholder="Username" type="text" name="username" spellcheck="false" autocomplete="off"
+                                data-msg-required="Username tidak boleh kosong." required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gutter-xs">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="kode">Kode Verifikasi</label>
+                            <input v-model="users.kode_verifikasi" id="kode" class="form-control" placeholder="Kode verifikasi" type="text" name="kode" spellcheck="false" autocomplete="off"
+                                data-msg-required="Kode verifikasi tidak boleh kosong." required>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <button @click="verifikasi()" id="btn-verifikasi" class="btn btn-primary btn-block">Verifikasi</button>
+        </div>
+    </div>
+    <div class="signup-footer">
+        Sudah memiliki akun? <a href="/auth/login">Masuk</a>
+        <br>
+        <br> Copyright &copy; 2016 by <a href="https://alfacode.me"><strong>Alfacode.me</strong></a>
+        <br>
+    </div>
+</div>
