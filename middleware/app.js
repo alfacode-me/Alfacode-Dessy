@@ -10,7 +10,11 @@ module.exports = {
 };
 
 router.use('/', (req, res, next) => {
-    res.redirect('/profile');
+    if (req.signedCookies.id) {
+        res.redirect('/profile');
+    } else {
+        res.redirect('/auth/login');
+    }
 });
 
 router.use('/profile', (req, res, next) => {
